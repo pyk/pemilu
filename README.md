@@ -1,89 +1,138 @@
-# Pemilu
-A beautiful Ruby interface of Pemilu API
+# pemilu
+A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
+
+## Contents
+- [Installation](in)
+- [How to use pemilu gem](ht)
+  - [Configure API key](c)
+  - [APIs](a)
+    - [List of Candidate attributes](ca)
+    - [Get list of all Candidates (`#candidates`)](g)
+    - [`#candidates` usage example](cux)
+    - [Get details of Candidate (`#candidate`)](gdoc)
+    - [`#candidate` usage example](cue)
+    - Get list of all Parties [**wait for the next release**](si)
+    - Get details of Party [**wait for the next release**](si)
+    - Get list of all Provinces [**wait for the next release**](si)
+    - Get details of Province [**wait for the next release**](si)
+    - Get list of all Electoral Districts [**wait for the next release**](si)
+    - Get details of Electoral District [**wait for the next release**](si)
+
+[in]: http
+[ht]: http
+[c]: http
+[a]: http
+[ca]: http
+[g]: http
+[cux]: http
+[gdoc]: http
+[cue]: http
+[si]: http
 
 ## Installation
-TODO: write installation instruction
+Add this line to your application's Gemfile:
 
-## Usage
+    gem 'test'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install test
+
+
+## How to use pemilu gem
 
 ### Configure
-Configure your API key first.
+Before accessing all available [APIs](a) make sure Configure your API key first.
+
+    require "pemilu"
 
     pemilu = Pemilu::API.new(key: "YOUR API KEY")
 
-### List of APIs
-TODO: add link to API
-1. Get all candidates
-2. Get specific candidate
-3.
+### APIs
 
-### Get all candidates
-Return an array of `Pemilu::Candidate` object that specific by declared option.
+#### List of Candidate attributes object
+List of available attribute to each candidate that you can get some information
+about candidate itself. For example `candidate.id` will display id of candidate.
 
-    pemilu.candidates # => [...]
+|Attribute|Return|Description|`#candidates`|`#candidate`|
+---------------------------------------------------------
+|`id`|String|ID of Candidate|x|x|
+|`name`|String|Name of Candidate|x|x|
+|`gender`|String|Gender of Candidate|x|x|
+|`religion`|String|Religion of Candidate|x|x|
+|`birthplace`|String|Birthplace of Candidate|x|x|
+|`date_of_birth`|String|Date of Candidate birth|x|x|
+|`marital_status`|String|Marital status of Candidate|x|x|
+|`name_of_couples`|String|Name of Candidate couples|x|x|
+|`number_of_children`|Integer|Number of Candidate children|x|x|
+|`village`|String|Village where Candidate live|x|x|
+|`sub_district`|String|Sub district where Candidate live|x|x|
+|`district`|String|District where Candidate live|x|x|
+|`province`|Hash|Province where Candidate live|x|x|
+|`electoral_district`|Hash|Electoral district where Candidate running on|x|x|
+|`election_year`|Integer|Election year where Candidate running on|x|x|
+|`legislative_body`|String|Legislative body where Candidate running on (ex. DPR)|x|x|
+|`party`|String|Party of Candidate|x|-|
+|`party`|Hash|Party of Candidate|-|x|
+|`ordinal`|Integer|Ordinal of Candidate|x|x|
+|`picture`|String|URL of Candidate picture|x|x|
+|`educations`|Array|List of Candidate education history|-|x|
+|`jobs`|Array|List of Candidate job history|-|x|
+|`organizations`|Array|List of Candidate organization history|-|x|
+
+#### Get list of all candidates
+Return an array of `Pemilu::Candidate` object that filtered by declared option.
+
     pemilu.candidates(options = {})
 
-Available options:
-TODO: make table from this data below
+##### Available options
 
-Option      : `name`
-Value       : String
-Description : String full or partial name of the candidate
-Return      : Only all candidates that matching with `name`
-Usage       : `pemilu.candidates(name: "bayu aldi yansyah")`
+|Option|Value|Default|Description|Return|
+-----------------------------------------
+|`name`|String|`nil`|String full or partial name of the candidate|Only all candidates that matching with `name`|
+|`party`|String|`nil`|Name of the available party|Only all candidates on the `party`|
+|`electoral_district`|String|`nil`|ID of electoral district (daerah pilihan)|Only all candidates that running on electoral district|
+|`election_year`|Integer|`nil`|Election year (tahun pemilihan)of candidate|Only all candidates that running on election year|
+|`province`|String|`nil`|ID of the Province|Only all candidates that running on `province`|
+|`gender`|String|`nil`|`"L"` for man and `"W"` for woman|Only all candidates has `gender` specified|
+|`religion`|String|`nil`|Religion of the candidate|Only all candidates that have religion specified|
+|`legislative_body`|String|`nil`|Legislative body that the candidate is running for|Only all candidates that running on that legislative body|
+|`limit`|Integer|`100`| Number of records to return| All candidates on specific limit number|
+|`offset`|Integer|`nil`|Number the offset|All candidates from beginning of the offset number|
 
-Option      : `party`
-Value       : String
-Description : Name of the available party
-Return      : Only all candidates on the `party`
-Usage       : `pemilu.candidates(party: "Partai Asolole jos!")`
+#### `#candidates` usage example
 
-Option      : `election_district`
-Value       : String
-Description : ID of election district (daerah pilihan)
-Return      : Only all candidates that running on election district
-Usage       : `pemilu.candidates(election_district: "1101-00-0000")`
+    # get 10 man candidates
+    pemilu.candidates(limit: 10, gender: "L")
 
-Option      : `election_year`
-Value       : Integer
-Description : Election year (tahun pemilihan)of candidate
-Return      : Only all candidates that running on election year
-Usage       : `pemilu.candidates(election_year: 2014)`
+    # print some information about 2 candidates with Islam religion
+    candidates = pemilu.candidates(limit:2, religion: "ISLAM")
+    candidates.each do |candidate|
+      puts "Name: #{candidate.name}"
+      puts "Regligion: #{candidate.religion}"
+    end
 
-Option      : `province`
-Value       : String
-Description : ID of the Province
-Return      : Only all candidates that running on `province`
-Usage       : `pemilu.candidates(province: "01")`
 
-Option      : `gender`
-Value       : String
-Description : `"L"` for man and `"W"` for woman
-Return      : Only all candidates has `gender`
-Usage       : `pemilu.candidates(gender: "L")`
+#### Get details of Candidate
+Return an object of `Pemilu::Candidate` with an `id` specified.
 
-Option      : `religion`
-Value       : String
-Description : Religion of the candidate
-Return      : Only all candidates that have religion specified
-Usage       : `pemilu.candidates(religion: "islam")`
+    pemilu.candidate("ID CANDIDATE")
 
-Option      : `legislative_body`
-Value       : String
-Description : Legislative body that the candidate is running for
-Return      : Only all candidates that running on that legislative body
-Usage       : `pemilu.candidates(legislative_body: "DPD")
+#### `#candidate` usage example
 
-Option      : `limit`
-Value       : Integer
-Description : Number of records to return
-Return      : All candidates on specific limit number
-Usage       : `pemilu.candidates(limit: 20)`
+    # print some information about Candidate with id=1101-00-0000-0102
+    candidate = pemilu.candidate("1101-00-0000-0102")
+    puts "Name: #{candidate.name}"
 
-Option      : `offset`
-Value       : Integer
-Description : Number the offset
-Return      : All candidates from beginning of the offset number
-Usage       : `pemilu.candidates(offset: 100)`
+## Still in active development
+23:32 Saturday, 1 March 2014.
+Sorry this gem is still under development. Actually you can use it on production
+because this gem is [well tested](wt). But, you don't get full feature yet.
+Please wait for the next release. You can give me a shot at [@peeyek](pyk) on twitter.
 
-### this gem is still on active development
+[wt]: http://linktospec
+[pyk] : http:/twitterlink
