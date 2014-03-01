@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Pemilu::VERSION
   spec.authors       = ["Bayu Aldi Yansyah"]
   spec.email         = ["bayualdiyansyah@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{A beautiful Ruby interface for Pemilu APIs (pemiluapi.org)}
+  spec.description   = %q{A beautiful Ruby interface for Pemilu APIs}
+  spec.homepage      = "https://github.com/pyk/pemilu"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
 end
