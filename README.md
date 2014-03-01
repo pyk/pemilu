@@ -33,7 +33,7 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 Add this line to your application's Gemfile:
 
 ```ruby
-    gem 'test'
+    gem 'pemilu'
 ```
 
 And then execute:
@@ -45,7 +45,7 @@ And then execute:
 Or install it yourself as:
 
 ```shell
-    $ gem install test
+    $ gem install pemilu
 ```
 
 ## How to use pemilu gem
