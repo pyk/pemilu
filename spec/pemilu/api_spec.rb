@@ -94,5 +94,30 @@ module Pemilu
       end
     end
 
+    describe "#provinces" do
+      let(:pemilu) { Pemilu::API.new(key: "06ec082d057daa3d310b27483cc3962e") }
+
+      it "should return an array of Pemilu::Province object" do
+        pemilu.provinces.should be_a(Array)
+        pemilu.provinces.each do |province|
+          expect(province.class).to eq(Pemilu::Province)
+        end
+      end
+    end
+
+    describe "#province(id)" do
+      let(:pemilu) { Pemilu::API.new(key: "06ec082d057daa3d310b27483cc3962e") }
+
+      it "should return Pemilu::Province object and have correct details" do
+        province = pemilu.province(11)
+        expect(province.id).to eq(11)
+        expect(province.name).to eq("Aceh")
+        expect(province.full_name).to eq("Aceh")
+        expect(province.international_name).to eq("Aceh")
+        expect(province.available_sheet).to eq(13)
+        expect(province.population).to eq(5015234)
+      end
+    end
+
   end
 end
