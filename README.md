@@ -34,7 +34,7 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 [lop]: https://github.com/pyk/pemilu#list-of-party-attributes
 [gloap]: https://github.com/pyk/pemilu#get-list-of-all-parties
 [psue]: https://github.com/pyk/pemilu#parties-usage-example
-[gop]: https://github.com/pyk/pemilu#get-details-of-party
+[gdop]: https://github.com/pyk/pemilu#get-details-of-party
 [pue]: https://github.com/pyk/pemilu#party-usage-example
 
 ## Installation
