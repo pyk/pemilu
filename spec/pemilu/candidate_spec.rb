@@ -42,7 +42,8 @@ module Pemilu
 					"ringkasan" => "Test"
 				}] ) }
 
-			it "should return a correct candidate details" do
+			it "should return Pemilu::Candidate object and have correct details" do
+        candidate.should be_a(Pemilu::Candidate)
 				expect(candidate.id).to eq(1)
 				expect(candidate.name).to eq("bayu aldi yansyah")
 				expect(candidate.gender).to eq("L")
