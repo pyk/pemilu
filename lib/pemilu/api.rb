@@ -68,6 +68,7 @@ module Pemilu
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
+      return "Cann't get candidate with id: #{id}" if data.nil?
       candidate = data["data"]["results"]["caleg"][0]
       return Pemilu::Candidate.new(
         id: candidate["id"],
@@ -134,6 +135,7 @@ module Pemilu
 
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
       party = data["data"]["results"]["partai"][0]
+      return "Cann't get party with id: #{id}" if party.nil?
       return Pemilu::Party.new(
           id: party["id"].to_i,
           nick_name: party["nama"],
@@ -173,6 +175,7 @@ module Pemilu
       respond = Net::HTTP.get_response(uri)
 
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
+      return "Cann't get province with id: #{id}" if data.nil?
       province = data["data"]["results"]["provinsi"][0]
       return Pemilu::Province.new(
           id: province["id"].to_i,
@@ -180,8 +183,9 @@ module Pemilu
           full_name: province["nama_lengkap"],
           international_name: province["nama_inggris"],
           available_chairs: province["jumlah_kursi"],
+          electoral_district: province["dapil"],
           population: province["jumlah_penduduk"])
-      end
+    end
 
   end
 end
