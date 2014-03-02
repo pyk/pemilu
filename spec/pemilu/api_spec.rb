@@ -113,8 +113,8 @@ module Pemilu
         expect(province.id).to eq(11)
         expect(province.name).to eq("Aceh")
         expect(province.full_name).to eq("Aceh")
-        expect(province.international_name).to eq("Aceh")
-        expect(province.available_sheet).to eq(13)
+        expect(province.international_name).to eq("Special Region of Aceh")
+        expect(province.available_chairs).to eq(13)
         expect(province.population).to eq(5015234)
       end
     end
