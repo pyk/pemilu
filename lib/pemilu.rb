@@ -6,6 +6,7 @@ require "pemilu/candidate"
 require "pemilu/hash_extension"
 require "pemilu/party"
 require "pemilu/province"
+require "pemilu/electoral_district"
 
 module Pemilu
   # Your code goes here...
