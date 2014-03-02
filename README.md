@@ -1,4 +1,4 @@
-# pemilu
+# pemilu [![Gem Version](https://badge.fury.io/rb/pemilu.png)](http://badge.fury.io/rb/pemilu)
 A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 
 ## Contents
@@ -6,20 +6,31 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 - [How to use pemilu gem][ht]
   - [Configure API key][c]
   - [APIs][a]
-    - [List of Candidate attributes][ca]
-    - [Get list of all Candidates (`#candidates`)][g]
-    - [`#candidates` usage example][cux]
-    - [Get details of Candidate (`#candidate(id)`)][gdoc]
-    - [`#candidate` usage example][cue]
-    - [List of Party attributes][lop] *(not available on current version, wait for the next release)*
-    - [Get list of all Parties (`#parties`)][gloap] *(not available on current version, wait for the next release)*
-    - [`#parties` usage example][psue] *(not available on current version, wait for the next release)*
-    - [Get details of Party][gdop] *(not available on current version, wait for the next release)*
-    - [`#party(id)` usage example][pue] *(not available on current version, wait for the next release)*
-    - Get list of all Provinces [**wait for the next release**][si]
-    - Get details of Province [**wait for the next release**][si]
-    - Get list of all Electoral Districts [**wait for the next release**][si]
-    - Get details of Electoral District [**wait for the next release**][si]
+    - **Candidate APIs**
+      - [List of Candidate attributes][ca]
+      - [Get list of all Candidates][g]
+      - [#candidates usage example][cux]
+      - [Get details of Candidate][gdoc]
+      - [#candidate usage example][cue]
+    - **Party APIs**  *(not available on current version, wait for the next release)*
+      - [List of Party attributes][lop]
+      - [Get list of all Parties][gloap]
+      - [#parties usage example][psue]
+      - [Get details of Party][gdop]
+      - [#party(id) usage example][pue] 
+    - **Province APIs**  *(not available on current version, wait for the next release)*
+      - [List of Province attributes][lopa]
+      - [Get list of all Provinces][gloapv]
+      - [#provinces usage example][pvue]
+      - [Get details of Province][gopv]
+      - [#province(id) usage example][pvue]
+    - **Electoral District APIs**  *(not available on current version, wait for the next release)*
+      - [List of Electoral District attributes][lopa]
+      - [Get list of all Electoral Districts][gloapv]
+      - [#electoral_districts usage example][pvue]
+      - [Get details of Electoral District][gopv]
+      - [#electoral_district(id) usage example][pvue]
+  - [Exception Handling][eh] *(not available on current version, wait for the next release)*
 
 [in]: https://github.com/pyk/pemilu#installation
 [ht]: https://github.com/pyk/pemilu#how-to-use-pemilu-gem
@@ -36,6 +47,12 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 [psue]: https://github.com/pyk/pemilu#parties-usage-example
 [gdop]: https://github.com/pyk/pemilu#get-details-of-party
 [pue]: https://github.com/pyk/pemilu#partyid-usage-example
+[lopa]: https://github.com/pyk/pemilu#list-of-province-attributes
+[gloapv]: https://github.com/pyk/pemilu#get-list-of-all-provinces
+[pvue]: https://github.com/pyk/pemilu#provinces-usage-example
+[gdop]: https://github.com/pyk/pemilu#get-details-of-province
+[gopv]: #
+[eh]: #
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -59,7 +76,7 @@ Or install it yourself as:
 ## How to use pemilu gem
 
 ### Configure
-Before accessing all available [APIs](a) make sure Configure your API key first.
+Before accessing all available [APIs](#contents) make sure Configure your API key first.
 
 ``` ruby
     require "pemilu"
@@ -145,6 +162,8 @@ Return an object of `Pemilu::Candidate` with an `id` specified.
     pemilu.candidate("ID CANDIDATE")
 ```
 
+ID Candidate must be String. like this `"1101-00-0000-0102"`
+
 #### `#candidate` usage example
 
 ```ruby
@@ -161,6 +180,7 @@ about party itself. For example `party.id` will display id of party.
 | --------- | ------ | ---------- | ---------- | -------- |
 | `id` | Integer | ID of Party | x | x |
 | `nick_name` | String | Nick name or abbreviation of Party | x | x |
+| `full_name` | String | Full name of Party | x | x |
 | `url` | String | URL to Party homepage | x | x |
 | `facebook` | String | URL to Party facebook page | x | X |
 | `twitter` | String | URL to Party twitter page | x | X |
@@ -211,6 +231,63 @@ Return one object of Pemilu::Party specified by ID.
     puts pdip.twitter #=> https://twitter.com/pdi_perjuangan
 ```
 
+#### List of Province attributes object
+List of available attribute to each Province that you can use for get some information
+about province itself. For example `province.id` will display id of province.
+
+| Attribute | Return | Decription | `#provinces` | `#province` |
+| --------- | ------ | ---------- | ---------- | -------- |
+| `id` | Integer | ID of Province | x | x |
+| `name` | String | Nick Name of Province | x | x |
+| `full_name` | String | Full Name of Province | x | x |
+| `international_name` | String | International Name (English) of Province | x | x |
+| `available_chairs` | Integer | Availalble chairs for Candidates | x | x |
+| `population` | Integer | Population of Province | x | x |
+| `electoral_district` | Array | List of Electoral District on Province | - | x |
+
+description:
+- `x` mark is sign this attribute available when return from `#provinces` or
+  `#province`
+- `-` mark is sign this attribute `nil` when return from `#provinces` or `#province`
+
+#### Get list of all Provinces
+Return an array of `Pemilu::Province` object.
+
+```ruby
+    # get all provinces
+    pemilu.provinces
+    #=> [#<Pemilu::Province:0xb8c4ceb8....]
+```
+
+#### `#provinces` usage example
+
+```ruby
+    # print id and international name of each province
+    pemilu.provinces.each do |province|
+      puts "ID: #{province.id}"
+      puts "Internatioal Name: #{province.international_name}"
+    end
+```
+
+#### Get details of Province
+Return one object of Pemilu::Province specified by ID.
+
+```ruby
+    pemilu.province("ID PROVINCE")
+```
+
+`ID PROVINCE` must be an Integer.
+
+#### `#province(id)` usage example
+
+```ruby
+    # print information about Special Region of Aceh
+    aceh = pemilu.province(11)
+
+    puts aceh.id #=> 11
+    puts aceh.name #=> Aceh
+    puts aceh.international_name #=> Special Region of Aceh
+```
 
 ## Still in active development
 
