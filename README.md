@@ -26,11 +26,13 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
       - [#province(id) usage example][pvue]
     - **Electoral District APIs**
       - [List of Electoral District attributes][loeda]
-      - [Get list of all Electoral Districts][gloapv]
-      - [#electoral_districts usage example][pvue]
-      - [Get details of Electoral District][gopv]
-      - [#electoral_district(id) usage example][pvue]
+      - [Get list of all Electoral Districts][adom1]
+      - [#electoral_districts usage example][adom2]
+      - [Get details of Electoral District][adom3]
+      - [#electoral_district(id) usage example][adom4]
   - [Exception Handling][eh]
+- [Author][auth]
+- [License][licn]
 
 [in]: https://github.com/pyk/pemilu#installation
 [ht]: https://github.com/pyk/pemilu#how-to-use-pemilu-gem
@@ -51,7 +53,14 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 [gloapv]: https://github.com/pyk/pemilu#get-list-of-all-provinces
 [pvue]: https://github.com/pyk/pemilu#provinceid-usage-example
 [gopv]: https://github.com/pyk/pemilu#get-details-of-province
-[loeda]: 
+[loeda]: https://github.com/pyk/pemilu#list-of-electoral-district-attribute
+[adom1]: https://github.com/pyk/pemilu#get-list-of-all-electoral-district
+[adom2]: https://github.com/pyk/pemilu#electoral_districts-usage-example
+[adom3]: https://github.com/pyk/pemilu#get-details-of-electoral-district
+[adom4]: https://github.com/pyk/pemilu#electoral_districtid-usage-example
+[eh]: https://github.com/pyk/pemilu#exception-handling
+[auth]: https://github.com/pyk/pemilu#author
+[licn]: https://github.com/pyk/pemilu#license
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -181,8 +190,8 @@ about party itself. For example `party.id` will display id of party.
 | `nick_name` | String | Nick name or abbreviation of Party | x | x |
 | `full_name` | String | Full name of Party | x | x |
 | `url` | String | URL to Party homepage | x | x |
-| `facebook` | String | URL to Party facebook page | x | X |
-| `twitter` | String | URL to Party twitter page | x | X |
+| `facebook` | String | URL to Party facebook page | x | x |
+| `twitter` | String | URL to Party twitter page | x | x |
 
 description:
 - `x` mark is sign this attribute available when return from `#parties` or
@@ -298,10 +307,10 @@ about Electoral District itself. For example `ed.id` will display id of Electora
 | `name` | String | Name or Electoral District | x | x |
 | `legislative_body` | String | Legislative body of Electoral District | x | x |
 | `available_chairs` | Integer | Number of available chairs in Electoral District| x | x |
-| `population` | Integer | Population in Electoral District | x | X |
+| `population` | Integer | Population in Electoral District | x | x |
 | `province` | Hash | Province of Electoral District | x | X |
-| `province.id` | Integer | Province id of Electoral District | x | X |
-| `province.name` | String | Province name of Electoral District | x | X |
+| `province.id` | Integer | Province id of Electoral District | x | x |
+| `province.name` | String | Province name of Electoral District | x | x |
 
 
 description:
@@ -362,7 +371,7 @@ but, with exception handling feature now every return object that didn't exist r
 
 
 ```shell
-"Cann't get party with id: 100"
+    "Cann't get party with id: 100"
 ```
 
 ## Author
