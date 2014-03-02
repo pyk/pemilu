@@ -22,11 +22,8 @@ module Pemilu
     describe "#candidates" do
       let(:pemilu) { Pemilu::API.new(key: "06ec082d057daa3d310b27483cc3962e") }
 
-      it "should return an array" do
-        pemilu.candidates.should be_a(Array)
-      end
-
       it "should return an array of Pemilu::Candidate object" do
+        pemilu.candidates.should be_a(Array)
         pemilu.candidates.each do |candidate|
           expect(candidate.class).to eq(Pemilu::Candidate)
         end
