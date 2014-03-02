@@ -8,7 +8,7 @@ module Pemilu
         name: "Sidoarjo",
         full_name: "Sidoarjo",
         international_name: "Sidoarjo jos!",
-        available_sheets: 1,
+        available_chairs: 1,
         population: 100000
       ) }
 
@@ -18,7 +18,7 @@ module Pemilu
         expect(province.name).to eq("Sidoarjo")
         expect(province.full_name).to eq("Sidoarjo")
         expect(province.international_name).to eq("Sidoarjo jos!")
-        expect(province.available_sheets).to eq(1)
+        expect(province.available_chairs).to eq(1)
         expect(province.population).to eq(100000)
       end
     end
