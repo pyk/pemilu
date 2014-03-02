@@ -116,6 +116,7 @@ module Pemilu
         expect(province.international_name).to eq("Special Region of Aceh")
         expect(province.available_chairs).to eq(13)
         expect(province.population).to eq(5015234)
+        province.electoral_district.should be_a(Array)
       end
     end
 
