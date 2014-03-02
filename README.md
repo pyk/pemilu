@@ -23,9 +23,9 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 
 [in]: https://github.com/pyk/pemilu#installation
 [ht]: https://github.com/pyk/pemilu#how-to-use-pemilu-gem
-[c]: https://github.com/pyk/pemilu#configure-api-key
+[c]: https://github.com/pyk/pemilu#configure
 [a]: https://github.com/pyk/pemilu#apis
-[ca]: https://github.com/pyk/pemilu#list-of-candidate-attributes
+[ca]: https://github.com/pyk/pemilu#list-of-candidate-attributes-object
 [g]: https://github.com/pyk/pemilu#get-list-of-all-candidates
 [cux]: https://github.com/pyk/pemilu#candidate-usage-example
 [gdoc]: https://github.com/pyk/pemilu#get-details-of-candidate
@@ -35,7 +35,7 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 [gloap]: https://github.com/pyk/pemilu#get-list-of-all-parties
 [psue]: https://github.com/pyk/pemilu#parties-usage-example
 [gdop]: https://github.com/pyk/pemilu#get-details-of-party
-[pue]: https://github.com/pyk/pemilu#party-usage-example
+[pue]: https://github.com/pyk/pemilu#partyid-usage-example
 
 ## Installation
 Add this line to your application's Gemfile:
