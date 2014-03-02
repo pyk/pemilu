@@ -110,22 +110,20 @@ module Pemilu
       respond = Net::HTTP.get_response(uri)
       result = []
 
-      if respond.is_a?(Net::HTTPSuccess)
-        data = JSON.parse(respond.body)
-        @total_parties = data["data"]["results"]["count"]
-        parties = data["data"]["results"]["partai"]
-        parties.each do |party|
-          result << Pemilu::Party.new(
-            id: party["id"].to_i,
-            nick_name: party["nama"],
-            full_name: party["nama_lengkap"],
-            url: party["url_situs"],
-            facebook: party["url_facebook"],
-            twitter: party["url_twitter"]
-          )
-        end
-        return result
+      data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
+      @total_parties = data["data"]["results"]["count"]
+      parties = data["data"]["results"]["partai"]
+      parties.each do |party|
+        result << Pemilu::Party.new(
+          id: party["id"].to_i,
+          nick_name: party["nama"],
+          full_name: party["nama_lengkap"],
+          url: party["url_situs"],
+          facebook: party["url_facebook"],
+          twitter: party["url_twitter"]
+        )
       end
+      return result
     end
 
     def party(id)
