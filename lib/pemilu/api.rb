@@ -28,11 +28,10 @@ module Pemilu
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
       result = []
-      if respond.is_a?(Net::HTTPSuccess)
-        data = JSON.parse(respond.body)
-        @total_candidate = data["data"]["results"]["total"]
-        candidates = data["data"]["results"]["caleg"]
-        candidates.each do |caleg|
+      data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
+      @total_candidate = data["data"]["results"]["total"]
+      candidates = data["data"]["results"]["caleg"]
+      candidates.each do |caleg|
         result << Pemilu::Candidate.new(
           id: caleg["id"],
           name: caleg["nama"],
@@ -59,9 +58,6 @@ module Pemilu
           party: caleg["partai"],
           ordinal: caleg["urutan"],
           picture: caleg["foto_url"])
-        end
-      else
-        return "Can't reach the http://api.pemiluapi.org"
       end
       return result
     end
@@ -138,18 +134,17 @@ module Pemilu
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
 
-      if respond.is_a?(Net::HTTPSuccess)
-        data = JSON.parse(respond.body)
-        party = data["data"]["results"]["partai"][0]
-        return Pemilu::Party.new(
-            id: party["id"].to_i,
-            nick_name: party["nama"],
-            full_name: party["nama_lengkap"],
-            url: party["url_situs"],
-            facebook: party["url_facebook"],
-            twitter: party["url_twitter"]
-          )
-      end
+      data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
+      party = data["data"]["results"]["partai"][0]
+      return Pemilu::Party.new(
+          id: party["id"].to_i,
+          nick_name: party["nama"],
+          full_name: party["nama_lengkap"],
+          url: party["url_situs"],
+          facebook: party["url_facebook"],
+          twitter: party["url_twitter"]
+        )
     end
+
   end
 end
