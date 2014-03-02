@@ -9,10 +9,13 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
     - [List of Candidate attributes][ca]
     - [Get list of all Candidates (`#candidates`)][g]
     - [`#candidates` usage example][cux]
-    - [Get details of Candidate (`#candidate`)][gdoc]
+    - [Get details of Candidate (`#candidate(id)`)][gdoc]
     - [`#candidate` usage example][cue]
-    - Get list of all Parties [**wait for the next release**][si]
-    - Get details of Party [**wait for the next release**][si]
+    - [List of Party attributes][lop]
+    - [Get list of all Parties (`#parties`)][gloap]
+    - [`#parties` usage example][psue]
+    - [Get details of Party][gdop]
+    - [`#party(id)` usage example][pue]
     - Get list of all Provinces [**wait for the next release**][si]
     - Get details of Province [**wait for the next release**][si]
     - Get list of all Electoral Districts [**wait for the next release**][si]
@@ -28,6 +31,11 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 [gdoc]: https://github.com/pyk/pemilu#get-details-of-candidate
 [cue]: https://github.com/pyk/pemilu#candidate-usage-example
 [si]: https://github.com/pyk/pemilu#still-in-active-development
+[lop]: https://github.com/pyk/pemilu#list-of-party-attributes
+[gloap]: https://github.com/pyk/pemilu#get-list-of-all-parties
+[psue]: https://github.com/pyk/pemilu#parties-usage-example
+[gop]: https://github.com/pyk/pemilu#get-details-of-party
+[pue]: https://github.com/pyk/pemilu#party-usage-example
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -92,9 +100,9 @@ about candidate itself. For example `candidate.id` will display id of candidate.
 | `organizations` | Array | List of Candidate organization history | - | x |
 
 description:
-- `x` mark is sign this attribute available when return from `#candidates` or `#candidates`
-- `-` mark is sign this attribute `nil` when return from `#candidates` or `#candidates`
- 
+- `x` mark is sign this attribute available when return from `#candidates` or `#candidate`
+- `-` mark is sign this attribute `nil` when return from `#candidates` or `#candidate`
+
 #### Get list of all candidates
 Return an array of `Pemilu::Candidate` object that filtered by declared option.
 
@@ -145,7 +153,67 @@ Return an object of `Pemilu::Candidate` with an `id` specified.
     puts "Name: #{candidate.name}"
 ```
 
+#### List of Party attributes object
+List of available attribute to each Party that you can use for get some information
+about party itself. For example `party.id` will display id of party.
+
+| Attribute | Return | Decription | `#parties` | `#party` |
+| --------- | ------ | ---------- | ---------- | -------- |
+| `id` | Integer | ID of Party | x | x |
+| `nick_name` | String | Nick name or abbreviation of Party | x | x |
+| `url` | String | URL to Party homepage | x | x |
+| `facebook` | String | URL to Party facebook page | x | X |
+| `twitter` | String | URL to Party twitter page | x | X |
+
+description:
+- `x` mark is sign this attribute available when return from `#parties` or
+  `#party`
+- `-` mark is sign this attribute `nil` when return from `#parties` or `#party`
+
+#### Get list of all Parties
+Return an array of `Pemilu::Party` object.
+
+```ruby
+    # get all parties
+    pemilu.parties
+    #=> [#<Pemilu::Party:0xb833bfcc....]
+```
+
+#### `#parties` usage example
+
+```ruby
+    # print name and facebook url each for each party
+    pemilu.parties.each do |party|
+      puts "Party name: #{party.full_name}"
+      puts "Party facebook: #{party.facebook}"
+    end
+```
+
+#### Get details of Party
+Return one object of Pemilu::Party specified by ID.
+
+```ruby
+    pemilu.party("ID PARTY")
+```
+
+`ID PARTY` must be an Integer.
+
+#### `#party(id)` usage example
+
+```ruby
+    # print information about Partai Demokrasi Indonesia Perjuangan
+    pdip = pemilu.party(4)
+
+    puts pdip.id #=> 4
+    puts pdip.nick_name #=> PDI-P
+    puts pdip.full_name #=> Partai Demokrasi Indonesia Perjuangan
+    puts pdip.facebook #=> https://www.facebook.com/DPP.PDI.Perjuangan
+    puts pdip.twitter #=> https://twitter.com/pdi_perjuangan
+```
+
+
 ## Still in active development
+
 23:32 Saturday, 1 March 2014.
 Sorry this gem is still under development. Actually you can use it on production
 because this gem is [well tested][wt]. But, you don't get full feature yet.
