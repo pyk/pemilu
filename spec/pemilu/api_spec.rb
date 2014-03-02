@@ -6,7 +6,7 @@ module Pemilu
       let(:pemilu) { Pemilu::API.new(key: "06ec082d057daa3d310b27483cc3962e") }
 
       it "should an object" do
-        pemilu.class.should be_a(Object)
+        pemilu.should be_a(Object)
       end
 
     end
@@ -30,16 +30,12 @@ module Pemilu
       end
     end
 
-    describe "#candidate" do
+    describe "#candidate(id)" do
       let(:pemilu) { Pemilu::API.new(key: "06ec082d057daa3d310b27483cc3962e") }
 
-      it "should return one Pemilu::Candidate object" do
+      it "should return one Pemilu::Candidate object and correct details" do
         caleg = pemilu.candidate("1101-00-0000-0102")
-        expect(caleg.class).to eq(Pemilu::Candidate)
-      end
-
-      it "should return details of candidate" do
-        caleg = pemilu.candidate("1101-00-0000-0102")
+        caleg.should be_a(Pemilu::Candidate)
         expect(caleg.id).to eq("1101-00-0000-0102")
         expect(caleg.name).to eq("Drs. H. T. PRIBADI")
         expect(caleg.gender).to eq("L")
@@ -110,6 +106,7 @@ module Pemilu
 
       it "should return Pemilu::Province object and have correct details" do
         province = pemilu.province(11)
+        province.should be_a(Pemilu::Province)
         expect(province.id).to eq(11)
         expect(province.name).to eq("Aceh")
         expect(province.full_name).to eq("Aceh")
