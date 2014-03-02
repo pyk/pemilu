@@ -1,4 +1,4 @@
-# pemilu [![Gem Version](https://badge.fury.io/rb/pemilu.png)](http://badge.fury.io/rb/pemilu)
+# pemilu [![Gem Version](https://badge.fury.io/rb/pemilu.png)](http://badge.fury.io/rb/pemilu) [![Build Status](https://travis-ci.org/pyk/pemilu.png?branch=master)](https://travis-ci.org/pyk/pemilu)
 A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 
 ## Contents
@@ -12,25 +12,25 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
       - [#candidates usage example][cux]
       - [Get details of Candidate][gdoc]
       - [#candidate usage example][cue]
-    - **Party APIs**  *(not available on current version, wait for the next release)*
+    - **Party APIs**
       - [List of Party attributes][lop]
       - [Get list of all Parties][gloap]
       - [#parties usage example][psue]
       - [Get details of Party][gdop]
       - [#party(id) usage example][pue] 
-    - **Province APIs**  *(not available on current version, wait for the next release)*
+    - **Province APIs**
       - [List of Province attributes][lopa]
       - [Get list of all Provinces][gloapv]
       - [#provinces usage example][pvue]
       - [Get details of Province][gopv]
       - [#province(id) usage example][pvue]
-    - **Electoral District APIs**  *(not available on current version, wait for the next release)*
-      - [List of Electoral District attributes][lopa]
+    - **Electoral District APIs**
+      - [List of Electoral District attributes][loeda]
       - [Get list of all Electoral Districts][gloapv]
       - [#electoral_districts usage example][pvue]
       - [Get details of Electoral District][gopv]
       - [#electoral_district(id) usage example][pvue]
-  - [Exception Handling][eh] *(not available on current version, wait for the next release)*
+  - [Exception Handling][eh]
 
 [in]: https://github.com/pyk/pemilu#installation
 [ht]: https://github.com/pyk/pemilu#how-to-use-pemilu-gem
@@ -42,17 +42,16 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 [gdoc]: https://github.com/pyk/pemilu#get-details-of-candidate
 [cue]: https://github.com/pyk/pemilu#candidate-usage-example
 [si]: https://github.com/pyk/pemilu#still-in-active-development
-[lop]: https://github.com/pyk/pemilu#list-of-party-attributes
+[lop]: https://github.com/pyk/pemilu#list-of-party-attributes-object
 [gloap]: https://github.com/pyk/pemilu#get-list-of-all-parties
 [psue]: https://github.com/pyk/pemilu#parties-usage-example
 [gdop]: https://github.com/pyk/pemilu#get-details-of-party
 [pue]: https://github.com/pyk/pemilu#partyid-usage-example
-[lopa]: https://github.com/pyk/pemilu#list-of-province-attributes
+[lopa]: https://github.com/pyk/pemilu#list-of-province-attributes-object
 [gloapv]: https://github.com/pyk/pemilu#get-list-of-all-provinces
-[pvue]: https://github.com/pyk/pemilu#provinces-usage-example
-[gdop]: https://github.com/pyk/pemilu#get-details-of-province
-[gopv]: #
-[eh]: #
+[pvue]: https://github.com/pyk/pemilu#provinceid-usage-example
+[gopv]: https://github.com/pyk/pemilu#get-details-of-province
+[loeda]: 
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -289,12 +288,89 @@ Return one object of Pemilu::Province specified by ID.
     puts aceh.international_name #=> Special Region of Aceh
 ```
 
-## Still in active development
+#### List of Electoral District attribute
+List of available attribute to each Electoral District that you can use for get some information
+about Electoral District itself. For example `ed.id` will display id of Electoral District.
 
-23:32 Saturday, 1 March 2014.
-Sorry this gem is still under development. Actually you can use it on production
-because this gem is [well tested][wt]. But, you don't get full feature yet.
-Please wait for the next release. You can give me a shot at [@peeyek][pyk] on twitter.
+| Attribute | Return | Decription | `#electoral_districts` | `#electoral_district` |
+| --------- | ------ | ---------- | ---------- | -------- |
+| `id` | String | ID of Electoral District | x | x |
+| `name` | String | Name or Electoral District | x | x |
+| `legislative_body` | String | Legislative body of Electoral District | x | x |
+| `available_chairs` | Integer | Number of available chairs in Electoral District| x | x |
+| `population` | Integer | Population in Electoral District | x | X |
+| `province` | Hash | Province of Electoral District | x | X |
+| `province.id` | Integer | Province id of Electoral District | x | X |
+| `province.name` | String | Province name of Electoral District | x | X |
 
-[wt]: https://github.com/pyk/pemilu/tree/master/spec
-[pyk]: https://twitter.com/peeyek/
+
+description:
+- `x` mark is sign this attribute available when return from `#parties` or
+  `#party`
+- `-` mark is sign this attribute `nil` when return from `#parties` or `#party`
+
+### Get list of all electoral district
+Return an array of `Pemilu::ElectoralDistrict` object that filtered by declared option.
+
+```ruby
+    pemilu.electoral_districts(options = {})
+```
+##### Available options
+
+| Option | Value | Default | Description | Return |
+| ------ | ----- | ------- | ----------- | ------ |
+| `province` | String | `nil`| Name of province | Only all electoral district in `province` |
+| `legislative_body` | String | `nil` | Legislative body of Electoral District | Only all electoral district that have specified legislative body |
+
+#### `#electoral_districts` usage example
+
+```ruby
+    # get electoral district on Aceh province
+    pemilu.electoral_districts(province: "Aceh")
+```
+
+#### Get details of Electoral District
+Return one object of Pemilu::ElectoralDistrict specified by ID.
+
+```ruby
+    pemilu.electoral_district("ID ELETORAL DISTRICT")
+```
+
+`ID ELECTORAL DISTRICT` should be String. Like this `"1101-00-0000"` 
+
+#### `#electoral_district(id)` usage example
+
+```ruby
+    # print information about Aceh I electoral district
+    ed = pemilu.electoral_district("1101-00-0000")
+
+    puts ed.id #=> 1101-00-0000
+    puts ed.legislative_body #=> DPR
+    puts ed.available_chairs #=> 7
+    puts ed.population #=> 2642760
+```
+
+### Exception Handling
+When get details of specific information about Candidate, Party, Province and Electoral District using ID that doesn't exist it will raised error like this:
+
+
+```shell
+    NoMethodError: undefined method `[]' for nil:NilClass
+```
+
+but, with exception handling feature now every return object that didn't exist return like this:
+
+
+```shell
+"Cann't get party with id: 100"
+```
+
+## Author
+| Author |
+| ---------------- |
+|Bayu Aldi Yansyah |
+|S1 Matematika, 2013, Universitas Airlangga |
+|[@peeyek](https://twitter.com/peeyek) |
+
+## License
+MIT (c) 2014 Bayu Aldi Yansyah
