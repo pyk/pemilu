@@ -106,5 +106,50 @@ module Pemilu
         jobs: candidate["riwayat_pekerjaan"],
         organizations: candidate["riwayat_organisasi"])
     end
+
+    def parties
+      uri = URI("http://api.pemiluapi.org/candidate/api/partai")
+      params = { apiKey: @key }
+      uri.query = URI.encode_www_form(params)
+      respond = Net::HTTP.get_response(uri)
+      result = []
+
+      if respond.is_a?(Net::HTTPSuccess)
+        data = JSON.parse(respond.body)
+        @total_parties = data["data"]["results"]["count"]
+        parties = data["data"]["results"]["partai"]
+        parties.each do |party|
+          result << Pemilu::Party.new(
+            id: party["id"].to_i,
+            nick_name: party["nama"],
+            full_name: party["nama_lengkap"],
+            url: party["url_situs"],
+            facebook: party["url_facebook"],
+            twitter: party["url_twitter"]
+          )
+        end
+        return result
+      end
+    end
+
+    def party(id)
+      uri = URI("http://api.pemiluapi.org/candidate/api/partai/#{id}")
+      params = { apiKey: @key }
+      uri.query = URI.encode_www_form(params)
+      respond = Net::HTTP.get_response(uri)
+
+      if respond.is_a?(Net::HTTPSuccess)
+        data = JSON.parse(respond.body)
+        party = data["data"]["results"]["partai"][0]
+        return Pemilu::Party.new(
+            id: party["id"].to_i,
+            nick_name: party["nama"],
+            full_name: party["nama_lengkap"],
+            url: party["url_situs"],
+            facebook: party["url_facebook"],
+            twitter: party["url_twitter"]
+          )
+      end
+    end
   end
 end
