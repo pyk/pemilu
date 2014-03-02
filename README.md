@@ -1,4 +1,5 @@
-# pemilu [![Gem Version](https://badge.fury.io/rb/pemilu.png)](http://badge.fury.io/rb/pemilu) [![Build Status](https://travis-ci.org/pyk/pemilu.png?branch=master)](https://travis-ci.org/pyk/pemilu)
+# pemilu [![Gem Version](https://badge.fury.io/rb/pemilu.png)](http://badge.fury.io/rb/pemilu) [![Build Status](https://travis-ci.org/pyk/pemilu.png?branch=master)](https://travis-ci.org/pyk/pemilu)  [![Dependency Status](https://gemnasium.com/pyk/pemilu.png)](https://gemnasium.com/pyk/pemilu) [![Code Climate](https://codeclimate.com/github/pyk/pemilu.png)](https://codeclimate.com/github/pyk/pemilu) [![Coverage Status](https://coveralls.io/repos/pyk/pemilu/badge.png)](https://coveralls.io/r/pyk/pemilu)
+
 A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 
 ## Contents
