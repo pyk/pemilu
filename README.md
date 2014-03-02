@@ -11,11 +11,11 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
     - [`#candidates` usage example][cux]
     - [Get details of Candidate (`#candidate(id)`)][gdoc]
     - [`#candidate` usage example][cue]
-    - [List of Party attributes][lop]
-    - [Get list of all Parties (`#parties`)][gloap]
-    - [`#parties` usage example][psue]
-    - [Get details of Party][gdop]
-    - [`#party(id)` usage example][pue]
+    - [List of Party attributes][lop] *(not available on current version, wait for the next release)*
+    - [Get list of all Parties (`#parties`)][gloap] *(not available on current version, wait for the next release)*
+    - [`#parties` usage example][psue] *(not available on current version, wait for the next release)*
+    - [Get details of Party][gdop] *(not available on current version, wait for the next release)*
+    - [`#party(id)` usage example][pue] *(not available on current version, wait for the next release)*
     - Get list of all Provinces [**wait for the next release**][si]
     - Get details of Province [**wait for the next release**][si]
     - Get list of all Electoral Districts [**wait for the next release**][si]
