@@ -28,6 +28,12 @@ module Pemilu
           expect(candidate.class).to eq(Pemilu::Candidate)
         end
       end
+
+      let(:pemilu_invalid) { Pemilu::API.new(key:"xxx") }
+
+      it "should return invalid request error " do
+        expect(pemilu_invalid.candidates).to eq("Invalid request error. Please check your API key")
+      end
     end
 
     describe "#candidate(id)" do
@@ -62,6 +68,16 @@ module Pemilu
         expect(caleg.jobs.class).to eq(Array)
         expect(caleg.organizations.class).to eq(Array)
       end
+
+      it "should return Can't get Candidate with id: 1" do
+        expect(pemilu.candidate(1)).to eq( "Can't get Candidate with id: 1" )
+      end
+
+      let(:pemilu_invalid) { Pemilu::API.new(key:"xxx") }
+
+      it "should return invalid request error " do
+        expect(pemilu_invalid.candidate("1101-00-0000-0102")).to eq("Invalid request error. Please check your API key")
+      end
     end
 
     describe "#parties" do
@@ -72,6 +88,12 @@ module Pemilu
         pemilu.parties.each do |party|
           expect(party.class).to eq(Pemilu::Party)
         end
+      end
+
+      let(:pemilu_invalid) { Pemilu::API.new(key:"xxx") }
+
+      it "should return invalid request error " do
+        expect(pemilu_invalid.parties).to eq("Invalid request error. Please check your API key")
       end
     end
 
@@ -88,6 +110,16 @@ module Pemilu
         expect(party.facebook).to eq("https://www.facebook.com/pages/Partai-Nasdem/135724689838285")
         expect(party.twitter).to eq("https://twitter.com/NasDem")
       end
+
+      it "should return Can't get Party with id: S" do
+        expect(pemilu.party("S")).to eq( "Can't get Party with id: S" )
+      end
+
+      let(:pemilu_invalid) { Pemilu::API.new(key:"xxx") }
+
+      it "should return invalid request error " do
+        expect(pemilu_invalid.party(1)).to eq("Invalid request error. Please check your API key")
+      end
     end
 
     describe "#provinces" do
@@ -98,6 +130,12 @@ module Pemilu
         pemilu.provinces.each do |province|
           expect(province.class).to eq(Pemilu::Province)
         end
+      end
+
+      let(:pemilu_invalid) { Pemilu::API.new(key:"xxx") }
+
+      it "should return invalid request error " do
+        expect(pemilu_invalid.provinces).to eq("Invalid request error. Please check your API key")
       end
     end
 
@@ -115,6 +153,16 @@ module Pemilu
         expect(province.population).to eq(5015234)
         province.electoral_district.should be_a(Array)
       end
+
+      it "should return Can't get Province with id: S" do
+        expect(pemilu.province("S")).to eq( "Can't get Province with id: S" )
+      end
+
+      let(:pemilu_invalid) { Pemilu::API.new(key:"xxx") }
+
+      it "should return invalid request error " do
+        expect(pemilu_invalid.province(11)).to eq("Invalid request error. Please check your API key")
+      end
     end
 
     describe "#electoral_districts" do
@@ -125,6 +173,12 @@ module Pemilu
         pemilu.electoral_districts.each do |ed|
           expect(ed.class).to eq(Pemilu::ElectoralDistrict)
         end
+      end
+
+      let(:pemilu_invalid) { Pemilu::API.new(key:"xxx") }
+
+      it "should return invalid request error " do
+        expect(pemilu_invalid.electoral_districts).to eq("Invalid request error. Please check your API key")
       end
     end
 
@@ -143,6 +197,17 @@ module Pemilu
         expect(electoral_district.province.id).to eq(11)
         expect(electoral_district.province.name).to eq("Aceh")
       end
+
+      it "should return Can't get Electoral District with id: S" do
+        expect(pemilu.electoral_district("S")).to eq( "Can't get Electoral District with id: S" )
+      end
+
+      let(:pemilu_invalid) { Pemilu::API.new(key:"xxx") }
+
+      it "should return invalid request error " do
+        expect(pemilu_invalid.electoral_district("1101-00-0000")).to eq("Invalid request error. Please check your API key")
+      end
+
     end
 
   end
