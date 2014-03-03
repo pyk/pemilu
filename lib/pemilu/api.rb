@@ -26,6 +26,7 @@ module Pemilu
       params.delete_if{ |k,v| v.nil? }
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
+      return "Invalid request error. Please check your API key" if respond.is_a?(Net::HTTPUnauthorized)
       result = []
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
       @total_candidate = data["data"]["results"]["total"]
@@ -66,8 +67,9 @@ module Pemilu
       params = { apiKey: @key }
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
+      return "Invalid request error. Please check your API key" if respond.is_a?(Net::HTTPUnauthorized)
+      return "Can't get Candidate with id: #{id}" if respond.is_a?(Net::HTTPInternalServerError)
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
-      return "Cann't get candidate with id: #{id}" if data.nil?
       candidate = data["data"]["results"]["caleg"][0]
       return Pemilu::Candidate.new(
         id: candidate["id"],
@@ -109,6 +111,7 @@ module Pemilu
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
       result = []
+      return "Invalid request error. Please check your API key" if respond.is_a?(Net::HTTPUnauthorized)
 
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
       @total_parties = data["data"]["results"]["count"]
@@ -131,10 +134,10 @@ module Pemilu
       params = { apiKey: @key }
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
-
+      return "Invalid request error. Please check your API key" if respond.is_a?(Net::HTTPUnauthorized)
+      return "Can't get Party with id: #{id}" if respond.is_a?(Net::HTTPBadRequest)
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
       party = data["data"]["results"]["partai"][0]
-      return "Cann't get party with id: #{id}" if party.nil?
       return Pemilu::Party.new(
           id: party["id"].to_i,
           nick_name: party["nama"],
@@ -150,6 +153,7 @@ module Pemilu
       params = { apiKey: @key }
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
+      return "Invalid request error. Please check your API key" if respond.is_a?(Net::HTTPUnauthorized)
       result = []
 
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
@@ -172,9 +176,10 @@ module Pemilu
       params = { apiKey: @key }
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
+      return "Invalid request error. Please check your API key" if respond.is_a?(Net::HTTPUnauthorized)
+      return "Can't get Province with id: #{id}" if respond.is_a?(Net::HTTPBadRequest)
 
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
-      return "Cann't get province with id: #{id}" if data.nil?
       province = data["data"]["results"]["provinsi"][0]
       return Pemilu::Province.new(
           id: province["id"].to_i,
@@ -198,6 +203,7 @@ module Pemilu
       params.delete_if{ |k,v| v.nil? }
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
+      return "Invalid request error. Please check your API key" if respond.is_a?(Net::HTTPUnauthorized)
       result = []
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
       @total_election_districts = data["data"]["results"]["count"]
@@ -223,9 +229,10 @@ module Pemilu
       params = { apiKey: @key }
       uri.query = URI.encode_www_form(params)
       respond = Net::HTTP.get_response(uri)
+      return "Invalid request error. Please check your API key" if respond.is_a?(Net::HTTPUnauthorized)
+      return "Can't get Electoral District with id: #{id}" if respond.is_a?(Net::HTTPInternalServerError)
 
       data = JSON.parse(respond.body) if respond.is_a?(Net::HTTPSuccess)
-      return "Cann't get province with id: #{id}" if data.nil?
       ed = data["data"]["results"]["dapil"][0]
       return Pemilu::ElectoralDistrict.new(
           id: ed["id"],
