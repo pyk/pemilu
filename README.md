@@ -3,6 +3,7 @@
 A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 
 ## Contents
+- [About PEMILU APIs 2014][apa2]
 - [Installation][in]
 - [How to use pemilu gem][ht]
   - [Configure API key][c]
@@ -32,9 +33,14 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
       - [Get details of Electoral District][adom3]
       - [#electoral_district(id) usage example][adom4]
   - [Exception Handling][eh]
+      - [Invalid API key][invkey]
+      - [ID Didn't exist][ide]
+- [Changelog][cnge]
 - [Author][auth]
 - [License][licn]
 
+[apa2]: https://github.com/pyk/pemilu#pemilu-apis-2014
+[cnge]: https://github.com/pyk/pemilu#changelog
 [in]: https://github.com/pyk/pemilu#installation
 [ht]: https://github.com/pyk/pemilu#how-to-use-pemilu-gem
 [c]: https://github.com/pyk/pemilu#configure
@@ -62,6 +68,13 @@ A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 [eh]: https://github.com/pyk/pemilu#exception-handling
 [auth]: https://github.com/pyk/pemilu#author
 [licn]: https://github.com/pyk/pemilu#license
+[invkey]: https://github.com/pyk/pemilu#invalid-api-key
+[ide]: https://github.com/pyk/pemilu#id-didnt-exist
+
+## PEMILU APIs 2014
+> As many as 180 million people are registered to vote in Indonesia's 2014 elections. An estimated 67 million of those people will be voting for the first time.
+> Voters need answers. Am I registered? Where do candidates stand on the issues that are important to me? How do I mark the ballot? What can I do if I'm having trouble voting?
+> To answer those questions, and many more, we're helping to build an open repository of information for Indonesian voters in 2014 — an elections API. - [PEMILU APIs 2014](http://pemiluapi.org/index-en.html)
 
 ## Installation
 Add this line to your application's Gemfile:
@@ -361,19 +374,34 @@ Return one object of Pemilu::ElectoralDistrict specified by ID.
 ```
 
 ### Exception Handling
-When get details of specific information about Candidate, Party, Province and Electoral District using ID that doesn't exist it will raised error like this:
+#### Invalid API key
+If you are using Invalid API key, all your request will return
+    
+    Invalid request error. Please check your API key
 
+##### ID Didn't exist
+If you are requesting ID for Candidate, Party, Province or Electoral District that didn't exist, your request will return
 
-```shell
-    NoMethodError: undefined method `[]' for nil:NilClass
-```
+    Can't get OBJECT with id: ID
 
-but, with exception handling feature now every return object that didn't exist return like this:
+note: `OBJECT` and `ID` are depend on your request. if you are requesting `party(s)` the return will like this
+    
+    Can't get Party with id: s
 
+## Changelog
+##### 1.0.1 March 3, 2014
+- add Handling Exception for Invalid APIs & ID object Didn't exist
 
-```shell
-    "Cann't get party with id: 100"
-```
+##### 1.0.0 March 2, 2014
+- initial relase
+- support all available APIs on [Pemilu APIs][paps]
+
+[paps]: https://github.com/pemiluAPI/calon-api-endpoint/blob/master/APIBLUEPRINT.md
+
+##### 0.5.1 March 1, 2014
+- pre-release
+- only support Candidate APIs
+
 
 ## Author
 | Author |
