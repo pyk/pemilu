@@ -63,7 +63,7 @@ module Pemilu
         expect(caleg.party.id).to eq(1)
         expect(caleg.party.name).to eq("Partai NasDem")
         expect(caleg.ordinal).to eq(2)
-        expect(caleg.picture).to eq("http://dct.kpu.go.id/images/foto/DPR/1101.%20ACEH%20I/01.%20NASDEM/02.%20DRS.%20H.T.%20PRIBADI.JPG")
+        expect(caleg.picture).to eq("http://apipemilu-caleg.s3-website-ap-southeast-1.amazonaws.com/caleg/foto/DPR/1101.%20ACEH%20I/01.%20NASDEM/02.%20DRS.%20H.T.%20PRIBADI.jpg")
         expect(caleg.educations.class).to eq(Array)
         expect(caleg.jobs.class).to eq(Array)
         expect(caleg.organizations.class).to eq(Array)
