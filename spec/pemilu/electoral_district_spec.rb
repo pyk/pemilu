@@ -22,8 +22,8 @@ module Pemilu
         expect(ed.available_chairs).to eq(1)
         expect(ed.population).to eq(1)
         ed.province.should be_a(Hash)
-        expect(ed.province.id).to eq(1)
-        expect(ed.province.name).to eq("test")
+        expect(ed.province["id"]).to eq(1)
+        expect(ed.province["name"]).to eq("test")
       end
     end
   end

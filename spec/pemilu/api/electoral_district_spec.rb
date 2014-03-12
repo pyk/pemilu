@@ -31,8 +31,8 @@ module Pemilu
         expect(electoral_district.available_chairs).to eq(7)
         expect(electoral_district.population).to eq(2642760)
         electoral_district.province.should be_a(Hash)
-        expect(electoral_district.province.id).to eq(11)
-        expect(electoral_district.province.name).to eq("Aceh")
+        expect(electoral_district.province["id"]).to eq(11)
+        expect(electoral_district.province["name"]).to eq("Aceh")
       end
 
       it "should return Can't get Electoral District with id: S" do
