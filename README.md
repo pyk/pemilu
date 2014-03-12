@@ -2,6 +2,10 @@
 
 A beautiful Ruby interface of [Pemilu APIs](http://pemiluapi.org)
 
+### Update 9 Mar 2014
+[Developer Pemilu APIs](http://developer.pemiluapi.org/) has published a bunch of [**new excellent** API endpoints](http://developer.pemiluapi.org/endpoints), my planning is to released pemilu gem v2.0.0 to support all those APIs. so far i already implemented [Pertanyaan API V1](http://developer.pemiluapi.org/endpoints), [see here](https://github.com/pyk/pemilu/commit/7902a68d7f3eb4ff62c9fba13177c37cfdb4b826). for the other APIs are in proccess. If you already extend this gem to support all those APIs, feel free to submit pull request.
+
+
 ## Contents
 - [About PEMILU APIs 2014][apa2]
 - [Installation][in]
