@@ -1,6 +1,6 @@
 module Pemilu
   class API
-    def questions(*args, offset: nil, limit: 100, law: nil, tags: nil)
+    def questions(*args, offset: nil, limit: 100, law: nil, tags: "")
       return tags(@key) if args[0] == :tags
       uri = URI("http://api.pemiluapi.org/pertanyaan/api/questions")
       params = {
@@ -8,7 +8,7 @@ module Pemilu
         offset: offset,
         limit: limit,
         law: law,
-        tags: tags
+        tags: tags.gsub(/,\s+/, ",")
       }
       params.delete_if{ |k,v| v.nil? }
       uri.query = URI.encode_www_form(params)
