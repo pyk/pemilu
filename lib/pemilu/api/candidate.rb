@@ -44,7 +44,7 @@ module Pemilu
             },
           electoral_district: {
             "id" => caleg["dapil"]["id"],
-            "nama" => caleg["dapil"]["nama"]
+            "name" => caleg["dapil"]["nama"]
             },
           election_year: caleg["tahun"],
           legislative_body: caleg["lembaga"],
