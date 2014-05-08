@@ -40,12 +40,12 @@ module Pemilu
       q = data["data"]["results"]["questions"]
       return "Can't get Question with id: #{id}" if q == nil
       return Pemilu::Question.new(
-          id: q["id"],
-          question: q["question"],
-          answer: q["answer"],
-          reference_law: q["reference_law"],
-          excerpt_law: q["excerpt_law"],
-          tags: q["tags"])
+          id: q[0]["id"],
+          question: q[0]["question"],
+          answer: q[0]["answer"],
+          reference_law: q[0]["reference_law"],
+          excerpt_law: q[0]["excerpt_law"],
+          tags: q[0]["tags"])
     end
 
     def tags(key)
