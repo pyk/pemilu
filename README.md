@@ -416,3 +416,5 @@ note: `OBJECT` and `ID` are depend on your request. if you are requesting `party
 
 ## License
 MIT (c) 2014 Bayu Aldi Yansyah
+
+[![Analytics](https://ga-beacon.appspot.com/UA-50800627-1/pemilu/readme)](https://github.com/igrigorik/ga-beacon)
